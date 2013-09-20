@@ -36,7 +36,7 @@ a:visited {
 <p>Data is passed within the fragment identifier of a URL (the bit after the hash). This must include both the configuration for the table and the values to display. Updating the fragment identifier will update the values displayed in the table.</p>
 
 <h3>How to Use</h3>
-<p>Data must be formatted as stringified JSON which can be parsed with <code>JSON.parse()</code>. The JSON must be structured as follows:</p>
+<p>Data must be formatted as stringified JSON which can be parsed with <code>JSON.parse()</code> and passed as the fragment identifier to <code>http://tabulatedata.com/src/html/v1.html</code>. The JSON must be structured as follows:</p>
 <pre>{
     tableConfig: {
         // table configuration
@@ -45,7 +45,19 @@ a:visited {
         // data
     }
 }</pre>
-<h4>How to Use</h4>
-<p></p>
+
+<h4>tableConfig</h4>
+<p>The <code>tableConfig</code> specifies how the table is formatted. The allowed formatting is primarily a subset of the configuration options specified by <a href="https://datatables.net/">DataTables</a> in the <a href="https://datatables.net/usage/">Usage</a> section of the documentation. In addition to this, a <code>columnNames</code> property takes an array of values to use as the column headings.</p>
+
+<h4>data</h4>
+<p>The data provided must match the tableConfig specified. This means that if the configuration indicates that there are 4 columns in the table, the provided data should contain 4 columns. Data is structured as follows:</p>
+<pre>data: {
+    key1: ['col 1 value', 'col 2 value', '...', 'col N value'],
+    key2: ['col 1 value', 'col 2 value', '...', 'col N value'],
+    // ...
+    keyN: ['col 1 value', 'col 2 value', '...', 'col N value']
+}</pre>
+<p>Each unique piece of data is given a key which will identify it. If the data against a given key is updated, the values currently displayed against that key will be replaced with the new values. If a key exists at one point and then disappears, the associated row will be removed from the table.</p>
+<p>Each key is connected with an array of values. The number of items in each array must match the number of columns specified within the table configuration.</p>
 </body>
 </html>
